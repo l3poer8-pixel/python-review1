@@ -1,22 +1,3 @@
-import json
-
-FILE_NAME = "contacts.json"
-
-def load_contacts():
-    try:
-        with open(FILE_NAME,"r",encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
-    except json.JSONDecodeError:
-        return []
-
-def save_contacts(contacts):
-    with open(FILE_NAME,"w",encoding="utf-8") as f:
-        json.dump(contacts,f,ensure_ascii=False,indent=2)
-
-contacts=load_contacts()
-
 def add_contacts(contacts,name,phone_number,email):
     if find_contact(contacts,name) is not None:
         print("该联系人已存在")
@@ -82,38 +63,3 @@ def delete_information(contacts, search_name):
 
         contacts.remove(i)
         print("已删除")
-
-
-while True:
-    print("=====通讯录=====")
-    print("1.添加联系人")
-    print("2.查看全部")
-    print("3.查找联系人")
-    print("4.修改联系人")
-    print("5.删除联系人")
-    print("0.退出")
-    choose=input("请选择:")
-    if choose=="1":
-        name=input("请输入姓名:")
-        phone_number=input("请输入电话:")
-        email=input("请输入邮箱:")
-        add_contacts(contacts,name,phone_number,email)
-        save_contacts(contacts)
-    elif choose=="2":
-        show_all(contacts)
-    elif choose=="3":
-        search_name=input("请输入你要查找的人名:")
-        search(contacts,search_name)
-    elif choose=="4":
-        search_name = input("请输入要修改的人名：")
-        change_information(contacts, search_name)
-        save_contacts(contacts)
-    elif choose=="5":
-        search_name = input("请输入要删除的人名：")
-        delete_information(contacts, search_name)
-        save_contacts(contacts)
-    elif choose=="0":
-        print("程序已退出")
-        break
-    else:
-        print("暂不支持该选项")
